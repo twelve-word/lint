@@ -2,7 +2,9 @@
 # Only rules that catch real bugs. Style, size limits, type hints and import order stay with
 # each project's own formatter, type checker and config.
 target-version = "py311"
-extend-exclude = ["**/migrations/**"]
+# breaks_every_rule.py is this repo's own fixture: it breaks every rule on purpose. check_rules.sh
+# lints it by name, which overrides the exclude; the edit hook (--force-exclude) skips it.
+extend-exclude = ["**/migrations/**", "**/breaks_every_rule.py"]
 
 [lint]
 select = [

@@ -1,0 +1,57 @@
+# Pull request checks, by the shared pr-checks standard (twelve-word/common-plugins).
+name: checks
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: read
+
+concurrency:
+  group: checks-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    # A manual run has no pull request to compare, so it runs every job.
+    outputs:
+      rules: ${{ github.event_name != 'pull_request' || steps.filter.outputs.rules }}
+    steps:
+      - uses: dorny/paths-filter@v3
+        id: filter
+        if: github.event_name == 'pull_request'
+        with:
+          filters: |
+            rules:
+              - "ruff.toml"
+              - "ruff-version"
+              - "eslint.config.mjs"
+              - "*.sh"
+              - ".pre-commit-hooks.yaml"
+              - "fixtures/**"
+              - "Makefile"
+              - ".github/workflows/checks.yml"
+
+  rules:
+    needs: changes
+    if: needs.changes.outputs.rules == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+      - uses: pnpm/action-setup@v4
+        with:
+          package_json_file: fixtures/ts/package.json
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: fixtures/ts/pnpm-lock.yaml
+      - run: pnpm install --frozen-lockfile
+        working-directory: fixtures/ts
+      - run: make check

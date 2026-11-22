@@ -6,6 +6,9 @@ const { default: projectConfig } = await import(process.env.ESLINT_PROJECT_CONFI
 
 export default [
   ...[projectConfig].flat(),
+  // This repo's own fixture, which breaks every rule on purpose. check_rules.sh lints it with
+  // --no-ignore; the edit hook and pre-commit skip it.
+  { ignores: ["**/breaks_every_rule.ts"] },
   {
     rules: {
       "no-empty": "error",

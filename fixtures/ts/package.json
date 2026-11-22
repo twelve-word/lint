@@ -1,0 +1,12 @@
+{
+  "name": "twelveword-lint-fixtures",
+  "private": true,
+  "type": "module",
+  "description": "A stand-in project: check_rules.sh lints these files through the shared ESLint rules.",
+  "devDependencies": {
+    "eslint": "9.39.5",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.73.0"
+  },
+  "packageManager": "pnpm@12.18.0"
+}
