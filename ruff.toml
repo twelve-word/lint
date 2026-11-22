@@ -1,0 +1,20 @@
+# The shared lint rules for every Twelveword project. Twelveword decided this on 2026-11-22.
+# Only rules that catch real bugs. Style, size limits, type hints and import order stay with
+# each project's own formatter, type checker and config.
+target-version = "py311"
+extend-exclude = ["**/migrations/**"]
+
+[lint]
+select = [
+    "E4", "E7", "E9", "F",  # pyflakes and Ruff's default pycodestyle subset (E722 is the bare except)
+    "B",                    # bugbear: mutable defaults, loop closures, raise without from
+    "BLE001",               # except Exception
+    "S110",                 # try / except / pass
+    "TRY002",               # raise a typed error, not Exception
+    "ASYNC",                # blocking calls in async code
+    "DTZ",                  # naive datetimes: store UTC
+    "PGH004",               # a noqa names its rule
+]
+ignore = [
+    "B008",  # FastAPI Depends() and Query() in argument defaults
+]

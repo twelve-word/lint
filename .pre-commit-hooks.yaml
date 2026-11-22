@@ -1,0 +1,18 @@
+- id: twelveword-lint-python
+  name: Twelveword shared Python lint (Ruff)
+  description: >-
+    Runs the shared Ruff rules in ruff.toml, with the Ruff version in ruff-version. The Claude
+    Code lint hook of the core plugin runs the same rules.
+  entry: pre_commit_ruff.sh
+  language: script
+  types: [python]
+
+- id: twelveword-lint-ts-js
+  name: Twelveword shared TypeScript/JavaScript lint (ESLint)
+  description: >-
+    Runs the shared ESLint rules in eslint.config.mjs on top of the project's own config. The
+    Claude Code lint hook of the core plugin runs the same rules. Skips a file whose project has
+    no ESLint installed.
+  entry: pre_commit_eslint.sh
+  language: script
+  types_or: [ts, tsx, javascript, jsx]
