@@ -27,4 +27,8 @@ The Python hook needs `uv` on the path. The ESLint hook uses the project's insta
 
 ## Where else it runs
 
-The `core` plugin in the private `twelve-word/common-plugins` repository runs the same rules on each file that Claude Code edits. It pins a commit of this repository in `plugins/core/lint/rules-commit`. To change a rule: change it here, then move that pin in `common-plugins`, then move the `rev` in each project in its own PR.
+The `core` plugin in the private `twelve-word/common-plugins` repository runs the same rules on each file that Claude Code edits. It pins a commit of this repository in `plugins/core/lint/rules-commit`.
+
+## Change a rule
+
+`CLAUDE.md` has the steps. In short: change the rule, add a fixture line that breaks it, and run `make check`, which proves that every rule still catches its fixture. After the PR merges, move the pin in `common-plugins`, then the `rev` in each project in its own PR.

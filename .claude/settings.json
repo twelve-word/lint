@@ -1,0 +1,13 @@
+{
+  "extraKnownMarketplaces": {
+    "twelve-word": {
+      "source": {
+        "source": "github",
+        "repo": "twelve-word/common-plugins"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "core@twelve-word": true
+  }
+}
