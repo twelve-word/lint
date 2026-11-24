@@ -16,3 +16,5 @@
   entry: pre_commit_eslint.sh
   language: script
   types_or: [ts, tsx, javascript, jsx]
+  # The script runs ESLint once per project. Parallel batches would start it again for each.
+  require_serial: true
